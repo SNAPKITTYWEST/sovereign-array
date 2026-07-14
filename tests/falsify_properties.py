@@ -25,8 +25,26 @@ from hypothesis import strategies as st
 
 # ── Load the shared library ───────────────────────────────────────────────────
 
+def _add_dll_dirs():
+    """Add MinGW/Strawberry runtime dirs so ctypes can resolve DLL deps on Windows."""
+    for d in [
+        r"C:\Strawberry\c\bin",
+        r"C:\Program Files\mingw64\bin",
+        r"C:\mingw64\bin",
+        r"C:\msys64\mingw64\bin",
+    ]:
+        if os.path.isdir(d):
+            try:
+                os.add_dll_directory(d)
+            except AttributeError:
+                pass  # Python < 3.8
+
+if os.name == "nt":
+    _add_dll_dirs()
+
+
 def _load_lib():
-    repo = pathlib.Path(__file__).parent.parent
+    repo = pathlib.Path(__file__).resolve().parent.parent
     candidates = [
         repo / "build" / "libsovereign_array.so",
         repo / "build" / "libsovereign_array.dll",

@@ -1,4 +1,5 @@
 #pragma once
+#include <stddef.h>
 // C export layer — lets Python ctypes / Rust FFI call the C++20 kernels
 // without name-mangling. Every function here maps to a theorem in ArrayLang/.
 
