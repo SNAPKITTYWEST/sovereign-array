@@ -137,9 +137,13 @@ theorem softmax_uniform_eq_faceCentroid {n : ℕ} (F : Face n) (hF : F.Nonempty)
   -- which equals faceCentroid F i = 1/|F|
   congr 1
   · exact hv_in i hi
-  · -- denominator = |F| * exp(c)
-    simp [sumFin]
-    sorry -- arithmetic: sum of exp(c) for i ∈ F and 0 elsewhere = |F| * exp(c)
+  · -- denominator: rewrite each term using hv_in / hv_out then simplify
+    simp only [sumFin]
+    congr 1
+    ext j
+    by_cases hj : j ∈ F
+    · simp [hv_in j hj]
+    · simp [hv_out j hj, Float.exp_zero]
 
 /-! ## 6. The NP Bridge (what actually holds) -/
 
