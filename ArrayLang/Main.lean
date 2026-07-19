@@ -13,3 +13,4 @@ import ArrayLang.Broadcast
 import ArrayLang.Softmax
 import ArrayLang.NandAttention
 import ArrayLang.SimplexNorm
+import ArrayLang.APLKernel
